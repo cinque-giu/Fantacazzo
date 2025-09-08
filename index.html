@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Asta Fantacalcio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🏆 Gestione Asta Fantacalcio</h1>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Budget Totale:</span>
+                    <span class="stat-value" id="total-budget">€4.000</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Speso:</span>
+                    <span class="stat-value" id="total-spent">€0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Giocatori Venduti:</span>
+                    <span class="stat-value" id="total-sold">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Preferiti:</span>
+                    <span class="stat-value" id="total-favorites">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Squadre -->
+        <section class="dashboard" id="dashboard">
+            <h2>📊 Dashboard Squadre</h2>
+            <div class="teams-grid">
+                <div class="card">
+                    <div class="card__body">
+                        <div class="teams-table-container">
+                            <table class="teams-table" id="teams-table">
+                                <thead>
+                                    <tr>
+                                        <th>Squadra</th>
+                                        <th>Proprietario</th>
+                                        <th>Budget Residuo</th>
+                                        <th>Por</th>
+                                        <th>Dif</th>
+                                        <th>Cen</th>
+                                        <th>Att</th>
+                                        <th>Totale Speso</th>
+                                        <th>Giocatori</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teams-tbody">
+                                    <!-- Teams will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-role="dashboard">📊 Dashboard</button>
+            <button class="tab-btn" data-role="Portieri">
+                🥅 Portieri 
+                <span class="player-count" id="count-portieri">0/0</span>
+            </button>
+            <button class="tab-btn" data-role="Difensori">
+                🛡️ Difensori 
+                <span class="player-count" id="count-difensori">0/0</span>
+            </button>
+            <button class="tab-btn" data-role="Centrocampisti">
+                ⚽ Centrocampisti 
+                <span class="player-count" id="count-centrocampisti">0/0</span>
+            </button>
+            <button class="tab-btn" data-role="Attaccanti">
+                🎯 Attaccanti 
+                <span class="player-count" id="count-attaccanti">0/0</span>
+            </button>
+            <button class="tab-btn" data-role="transactions">📋 Transazioni</button>
+            <button class="tab-btn" data-role="rose">👥 Rose</button>
+        </nav>
+
+        <!-- Player Sections -->
+        <section class="players-section hidden" id="Portieri">
+            <div class="section-header">
+                <h2>🥅 Portieri Disponibili</h2>
+                <div class="section-controls">
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="search-portieri" 
+                            class="search-input form-control" 
+                            placeholder="🔍 Cerca portiere..."
+                        >
+                    </div>
+                    <div class="filter-controls">
+                        <select id="filter-team-portieri" class="form-control">
+                            <option value="">Tutte le squadre</option>
+                        </select>
+                        <button class="btn btn--outline" id="show-favorites-portieri">⭐ Solo Preferiti</button>
+                    </div>
+                    <button class="btn btn--primary" id="add-custom-portieri">➕ Aggiungi Giocatore Custom</button>
+                </div>
+            </div>
+            <div class="players-grid" id="portieri-grid">
+                <!-- Players will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section class="players-section hidden" id="Difensori">
+            <div class="section-header">
+                <h2>🛡️ Difensori Disponibili</h2>
+                <div class="section-controls">
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="search-difensori" 
+                            class="search-input form-control" 
+                            placeholder="🔍 Cerca difensore..."
+                        >
+                    </div>
+                    <div class="filter-controls">
+                        <select id="filter-team-difensori" class="form-control">
+                            <option value="">Tutte le squadre</option>
+                        </select>
+                        <button class="btn btn--outline" id="show-favorites-difensori">⭐ Solo Preferiti</button>
+                    </div>
+                    <button class="btn btn--primary" id="add-custom-difensori">➕ Aggiungi Giocatore Custom</button>
+                </div>
+            </div>
+            <div class="players-grid" id="difensori-grid">
+                <!-- Players will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section class="players-section hidden" id="Centrocampisti">
+            <div class="section-header">
+                <h2>⚽ Centrocampisti Disponibili</h2>
+                <div class="section-controls">
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="search-centrocampisti" 
+                            class="search-input form-control" 
+                            placeholder="🔍 Cerca centrocampista..."
+                        >
+                    </div>
+                    <div class="filter-controls">
+                        <select id="filter-team-centrocampisti" class="form-control">
+                            <option value="">Tutte le squadre</option>
+                        </select>
+                        <button class="btn btn--outline" id="show-favorites-centrocampisti">⭐ Solo Preferiti</button>
+                    </div>
+                    <button class="btn btn--primary" id="add-custom-centrocampisti">➕ Aggiungi Giocatore Custom</button>
+                </div>
+            </div>
+            <div class="players-grid" id="centrocampisti-grid">
+                <!-- Players will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section class="players-section hidden" id="Attaccanti">
+            <div class="section-header">
+                <h2>🎯 Attaccanti Disponibili</h2>
+                <div class="section-controls">
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="search-attaccanti" 
+                            class="search-input form-control" 
+                            placeholder="🔍 Cerca attaccante..."
+                        >
+                    </div>
+                    <div class="filter-controls">
+                        <select id="filter-team-attaccanti" class="form-control">
+                            <option value="">Tutte le squadre</option>
+                        </select>
+                        <button class="btn btn--outline" id="show-favorites-attaccanti">⭐ Solo Preferiti</button>
+                    </div>
+                    <button class="btn btn--primary" id="add-custom-attaccanti">➕ Aggiungi Giocatore Custom</button>
+                </div>
+            </div>
+            <div class="players-grid" id="attaccanti-grid">
+                <!-- Players will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Rose Section -->
+        <section class="rose-section hidden" id="rose">
+            <h2>👥 Rose delle Squadre</h2>
+            <div class="rose-grid" id="rose-grid">
+                <!-- Team squads will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Transactions Section -->
+        <section class="transactions-section hidden" id="transactions">
+            <h2>📋 Transazioni Completate</h2>
+            <div class="card">
+                <div class="card__body">
+                    <div class="transactions-controls">
+                        <button class="btn btn--secondary" id="undo-last-btn" disabled>
+                            ↶ Annulla Ultima Transazione
+                        </button>
+                        <button class="btn btn--outline" id="export-btn">
+                            📤 Esporta Risultati
+                        </button>
+                        <button class="btn btn--outline" id="import-btn">
+                            📥 Importa Dati
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display: none;">
+                        <div class="transaction-stats">
+                            <span class="stat-text">
+                                Totale transazioni: <strong id="transaction-count">0</strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="transactions-list" id="transactions-list">
+                        <p class="empty-state">Nessuna transazione completata</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Auction Modal -->
+    <div class="modal hidden" id="auction-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-player-name">Asta Giocatore</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="player-info" id="player-info">
+                    <!-- Player details will be populated -->
+                </div>
+                <form id="auction-form">
+                    <div class="form-group">
+                        <label class="form-label" for="auction-price">Prezzo di Aggiudicazione (€)</label>
+                        <input type="number" id="auction-price" class="form-control" min="1" max="500" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="winning-team">Squadra Vincitrice</label>
+                        <select id="winning-team" class="form-control" required>
+                            <option value="">Seleziona squadra...</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="budget-warning hidden" id="budget-warning">
+                        ⚠️ Attenzione: questa squadra non ha budget sufficiente!
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn--secondary" id="modal-cancel">Annulla</button>
+                <button type="submit" form="auction-form" class="btn btn--primary" id="confirm-auction">Conferma Acquisto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Player Modal -->
+    <div class="modal hidden" id="custom-player-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="custom-modal-title">Aggiungi Giocatore Custom</h3>
+                <button class="modal-close" id="custom-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="custom-player-form">
+                    <div class="form-group">
+                        <label class="form-label" for="custom-player-name">Nome Giocatore</label>
+                        <input type="text" id="custom-player-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="custom-player-team">Squadra Reale</label>
+                        <input type="text" id="custom-player-team" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="custom-player-priority">Priorità</label>
+                        <select id="custom-player-priority" class="form-control" required>
+                            <option value="1">1 - Alta</option>
+                            <option value="2">2 - Media</option>
+                            <option value="3">3 - Bassa</option>
+                            <option value="4">4 - Molto Bassa</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn--secondary" id="custom-modal-cancel">Annulla</button>
+                <button type="submit" form="custom-player-form" class="btn btn--primary" id="confirm-custom-player">Aggiungi Giocatore</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
